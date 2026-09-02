@@ -10,6 +10,56 @@ The core idea is simple:
 
 **The person owns the relationship; models are interchangeable workers.**
 
+## Current public boundary
+
+This repository now contains the first runnable approved reference boundary:
+
+- provider-neutral model/provider contract;
+- loopback enforcement for local providers;
+- public device capability/interface contract;
+- deny-by-default physical action check;
+- private-by-default data-egress policy;
+- durable-record minimization example;
+- deterministic evidence receipts;
+- model/provider-substitutable continuity checkpoints;
+- public conformance/negative tests;
+- affordable dedicated Device design track;
+- explicit six-principle product acceptance criteria.
+
+Run the current reference tests with:
+
+```bash
+npm test
+```
+
+## Six product principles
+
+SENTIENT Core, App, and Device are evaluated against six product principles:
+
+1. **Open** — approved public components are inspectable, runnable, reproducible, and buildable.
+2. **Yours to keep** — ordinary use does not disappear with one provider, account, subscription, or model.
+3. **Accessible** — target hardware people actually own, plus an affordable dedicated Device path.
+4. **Good for humanity** — measurable benefit for real human needs, especially underserved users.
+5. **Private by default** — sensitive personal information stays local unless a bounded transfer is knowingly authorized.
+6. **Empowering, not extractive** — the person receives capability without requiring surveillance, data harvesting, attention capture, or perpetual provider dependence.
+
+Detailed acceptance criteria are in `docs/FOUNDATION_SIX_PRINCIPLES.md`.
+
+## Core / App / Device
+
+SENTIENT is one personal-AI architecture with three deployment forms:
+
+- **Core** — local runtime, privacy, model/provider abstraction, continuity, evidence, and governed capability interfaces;
+- **App** — accessible graphical/mobile/desktop experience and Device pairing/control surface;
+- **Device** — dedicated local hardware embodiment for private, resilient personal AI.
+
+The Device program has two design tracks:
+
+- **Affordable Reference Device** — quality, repairable, consumer-accessible local AI using commodity/reference hardware first;
+- **Flagship Device** — premium design ceiling with higher compute, sensing, display, audio, materials, and expansion capability.
+
+The affordable design is documented in `docs/DEVICE_AFFORDABLE_REFERENCE_V0_1.md`.
+
 ## Design goals
 
 Sentient is intended to demonstrate a personal AI architecture that can:
@@ -62,13 +112,14 @@ This repository may include approved open implementations of:
 - model routing;
 - privacy and data-sovereignty policies;
 - governed action envelopes;
-- Take Gate integration;
+- Take Gate-compatible public interfaces;
 - Guardian observation interfaces;
 - execution and evidence receipts;
 - durable checkpoints;
 - interruption and recovery;
 - model/provider substitution;
 - task continuity;
+- device-interface contracts;
 - user-facing reference workflows;
 - conformance and security tests.
 
@@ -90,11 +141,13 @@ It does not automatically include:
 
 Those remain outside the public Sentient boundary unless separately approved for release.
 
-## Relationship to ALLEN, OIAGP, and Guardian
+## Relationship to ALLEN, OIAGP, NSF research, and Guardian
 
 Sentient is the human-facing reference implementation.
 
-ALLEN provides the broader proprietary institutional architecture.
+Selected trust, permission, provenance, delegation, and Take Gate-compatible concepts may also be developed and evaluated through OIAGP/NSF research. Shared technical lineage does not collapse the separate IP, governance, publication, or authority boundaries of the projects.
+
+ALLEN remains the broader protected institutional architecture.
 
 OIAGP provides reusable authority, identity, governance, and interoperability concepts.
 
@@ -118,15 +171,4 @@ The exact license, contribution model, and release profile will be documented be
 
 ## Current status
 
-Early public reference implementation.
-
-Initial engineering areas include:
-
-- model/provider independence;
-- privacy and personal data sovereignty;
-- governed action;
-- evidence receipts;
-- durable continuity;
-- checkpoint/resume/recovery;
-- model substitution;
-- security and negative testing.
+Early runnable public reference implementation. The current code is intentionally small and dependency-light so the public boundary can be inspected and tested without requiring a proprietary model provider.
