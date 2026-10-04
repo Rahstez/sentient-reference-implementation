@@ -14,7 +14,8 @@ test("local providers reject non-loopback endpoints", () => {
 
 test("sensitive remote egress fails closed without user approval", () => {
   assert.equal(evaluateDataEgress({ sensitivity: "sensitive", destination: "remote" }).allowed, false);
-  assert.equal(evaluateDataEgress({ sensitivity: "sensitive", destination: "remote", userApproved: true }).allowed, true);
+  assert.equal(evaluateDataEgress({ sensitivity: "sensitive", destination: "remote", userApproved: true }).allowed, false);
+  assert.equal(evaluateDataEgress({ sensitivity: "sensitive", destination: "remote", userApproved: true }, { verifyUserApproval: () => true }).allowed, true);
 });
 
 test("durable record excludes raw sensitive content", () => {
@@ -26,7 +27,8 @@ test("durable record excludes raw sensitive content", () => {
 test("pairing alone does not authorize physical action", () => {
   const device = validateDeviceDescriptor({ id: "device-1", capabilities: ["audio.output"], paired: true });
   assert.equal(mayPerformPhysicalAction(device, "audio.output", null), false);
-  assert.equal(mayPerformPhysicalAction(device, "audio.output", { decision: "ALLOW", scope: "audio.output" }), true);
+  assert.equal(mayPerformPhysicalAction(device, "audio.output", { decision: "ALLOW", scope: "audio.output" }), false);
+  assert.equal(mayPerformPhysicalAction(device, "audio.output", { decision: "ALLOW", scope: "audio.output" }, { verifyAuthorization: () => true }), true);
 });
 
 test("evidence receipts are deterministic", () => {

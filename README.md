@@ -26,6 +26,27 @@ This repository now contains the first runnable approved reference boundary:
 - affordable dedicated Device design track;
 - explicit six-principle product acceptance criteria.
 
+### Verified host authorization (reference boundary v0.2)
+
+Remote egress and physical action now deny by default when the trusted host
+does not supply a verifier. A caller's approval flag or ALLOW object is intent
+or candidate evidence; it is not verified authority. Pairing and privacy flags
+accept literal booleans only.
+
+The host injects `verifyUserApproval` as the second `evaluateDataEgress`
+argument, or `verifyAuthorization` as the fourth `mayPerformPhysicalAction`
+argument. These synchronous functions receive detached, frozen operation and
+scope bindings. Only a literal `true` verification admits the reference check;
+missing, throwing, asynchronous or malformed outcomes deny. The host must
+resolve principal, exact destination/device/resource, current scope, expiry,
+revocation and replay policy through its authoritative store. Never derive the
+verifier itself from request JSON, content or model output. Existing callers
+without that dependency fail closed; they must migrate before consequential use.
+
+Passing this reference check does not execute a transfer or hardware action.
+The repository does not provide a deployed authority store or transport. Tests
+use synthetic host fixtures and do not prove live approval or device pairing.
+
 Run the current reference tests with:
 
 ```bash

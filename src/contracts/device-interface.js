@@ -1,4 +1,5 @@
-export const SENTIENT_DEVICE_INTERFACE_VERSION = "0.1.0";
+import { verifyTrustedAuthorization } from './trusted-authorization.js';
+export const SENTIENT_DEVICE_INTERFACE_VERSION = "0.2.0";
 
 export const DeviceCapabilities = Object.freeze([
   "audio.input",
@@ -21,18 +22,19 @@ export function validateDeviceDescriptor(device) {
     id: device.id,
     interfaceVersion: SENTIENT_DEVICE_INTERFACE_VERSION,
     capabilities: Object.freeze(capabilities),
-    paired: Boolean(device.paired),
+    paired: device.paired === true,
     privacy: Object.freeze({
-      microphoneMuted: Boolean(device.privacy?.microphoneMuted),
-      cameraDisabled: Boolean(device.privacy?.cameraDisabled),
-      networkAllowed: Boolean(device.privacy?.networkAllowed),
+      microphoneMuted: device.privacy?.microphoneMuted === true,
+      cameraDisabled: device.privacy?.cameraDisabled === true,
+      networkAllowed: device.privacy?.networkAllowed === true,
     }),
   });
 }
 
-export function mayPerformPhysicalAction(device, requestedCapability, authorization) {
+export function mayPerformPhysicalAction(device, requestedCapability, authorization, dependencies = {}) {
   const descriptor = validateDeviceDescriptor(device);
   if (!descriptor.capabilities.includes(requestedCapability)) return false;
   if (!descriptor.paired) return false;
-  return authorization?.decision === "ALLOW" && authorization?.scope === requestedCapability;
+  if (authorization?.decision !== "ALLOW" || authorization?.scope !== requestedCapability) return false;
+  return verifyTrustedAuthorization(dependencies?.verifyAuthorization, { operation: 'physical.action', deviceId: descriptor.id, capability: requestedCapability, authorization });
 }
